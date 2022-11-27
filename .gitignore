@@ -36,3 +36,4 @@ bin/
 .vscode/
 .idea/
 *.swp
+deploy/docker-compose/app/data/*
