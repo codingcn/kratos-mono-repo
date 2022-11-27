@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f configs.yml -o ../kubernetes
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: payment-configs
+  name: payment-configs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: payment-configs
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f configs.yml -o ../kubernetes
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: payment-configs
+    spec:
+      containers:
+        - image: go-kratos/beer-payment-configs:0.1.0
+          name: payment-configs
+          resources: {}
+      hostname: cart-configs
+      restartPolicy: Always
+status: {}

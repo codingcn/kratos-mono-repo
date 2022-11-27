@@ -1,0 +1,37 @@
+server:
+  name: "kratos.user.configs"
+  version: "1.0"
+  http:
+    addr: 0.0.0.0:8001
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:9001
+    timeout: 1s
+
+data:
+  database:
+    driver: mysql
+    source: root:123456@tcp(127.0.0.1:3380)/mysql?charset=utf8mb4&parseTime=True&loc=Local
+  redis:
+    addr: 127.0.0.1:6350
+    password: "123456"
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+auth:
+  key: some-secret-key
+
+discovery:
+  consul:
+    addr: 127.0.0.1:8500
+    scheme: http
+registry:
+  consul:
+    addr: 127.0.0.1:8500
+    scheme: http
+
+trace:
+  enable: true
+  endpoint: http://127.0.0.1:14268/api/traces
+  trace_file_path: ./log/trace.log
+  exporter: jaeger
+  token:

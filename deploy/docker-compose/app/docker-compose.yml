@@ -1,0 +1,105 @@
+version: '3'
+networks:
+  kratos-net:
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:1.33
+    hostname: jaeger
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: 9411
+    ports:
+      -  5775:5775/udp
+      -  6831:6831/udp
+      -  6832:6832/udp
+      -  5778:5778
+      -  16686:16686
+      -  14250:14250
+      -  14268:14268
+      -  14269:14269
+      -  9411:9411
+    networks:
+      - kratos-net
+  consul:
+    image: consul:1.14.1
+    hostname: consul
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+    ports:
+      - 8500:8500
+    networks:
+      - kratos-net
+  user-db:
+    networks:
+      - kratos-net
+    image: mysql:8.0.31-debian
+    hostname: user-db
+    container_name: user-db
+    ports:
+      - 3380:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=user
+    volumes:
+      - ./data/mysql/user:/var/lib/mysql
+      - ./conf/mysql/conf.d:/etc/mysql/conf.d
+  order-db:
+    networks:
+      - kratos-net
+    image: mysql:8.0.31-debian
+    hostname: order-db
+    ports:
+      - 3381:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=order
+    volumes:
+      - ./data/mysql/order:/var/lib/mysql
+      - ./conf/mysql/conf.d:/etc/mysql/conf.d
+  cache-redis:
+    networks:
+      - kratos-net
+    image: redis:6-alpine
+    hostname: cache-redis
+    volumes:
+      - ./data/redis/cache/:/data
+      - ./conf/redis/cache/redis.conf:/etc/redis/redis.conf
+    ports:
+      - 6350:6379
+    command: ["redis-server","/etc/redis/redis.conf"]
+  zookeeper:
+    networks:
+      - kratos-net
+    image: docker.io/bitnami/zookeeper:3.8
+    ports:
+      - 2181:2181
+    volumes:
+      - "./data/zookeeper/:/bitnami/"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    networks:
+      - kratos-net
+    image: docker.io/bitnami/kafka:3.3
+    ports:
+      - "9092:9092"
+    volumes:
+      - "./data/kafka/:/bitnami/"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+  kafka-manager:
+    networks:
+      - kratos-net
+    image: sheepkiller/kafka-manager:latest
+    container_name: kafka-manager
+    ports:
+      - 19092:19092
+    environment:
+      ZK_HOSTS: zookeeper:2181
+      APPLICATION_SECRET: xxxxxxxxxxxxxx
+      KAFKA_MANAGER_USERNAME: admin
+      KAFKA_MANAGER_PASSWORD: 123456
+      KM_ARGS: -Dhttp.port=19092

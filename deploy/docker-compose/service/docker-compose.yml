@@ -1,0 +1,31 @@
+version: '3'
+networks:
+  app_kratos-net:
+    external: true
+services:
+  kratos-bff-interface:
+    image: go-kratos/kratos-bff-interface:0.1.0
+    hostname: kratos-bff-interface
+    ports:
+      - 8000:8000
+    volumes:
+      - ./configs/bff.yaml:/data/conf.yaml
+    restart: always
+    networks:
+      - app_kratos-net
+  kratos-user-service:
+    image: go-kratos/kratos-user-service:0.1.0
+    hostname: kratos-user-configs
+    volumes:
+      - ./configs/user.yaml:/data/conf.yaml
+    restart: always
+    networks:
+      - app_kratos-net
+  kratos-order-service:
+    image: go-kratos/kratos-order-service:0.1.0
+    hostname: kratos-order-configs
+    volumes:
+      - ./configs/order.yaml:/data/conf.yaml
+    restart: always
+    networks:
+      - app_kratos-net
