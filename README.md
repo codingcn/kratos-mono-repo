@@ -17,10 +17,16 @@
 
 ### Docker compose快速启动项目
 
+支持windows快速启动，但必须在git bash中执行下面的命令
+
 ```
 // 拉取仓库
 git clone git@github.com:codingcn/kratos-mono-repo.git
 
+// windows系统默认没有make命令，需要自行安装
+make init
+
+make api
 
 // 构建微服务镜像
 cd kratos-mono-repo

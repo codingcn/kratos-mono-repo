@@ -71,7 +71,7 @@ services:
   zookeeper:
     networks:
       - kratos-net
-    image: docker.io/bitnami/zookeeper:3.8
+    image: bitnami/zookeeper:3.8
     ports:
       - 2181:2181
     volumes:
@@ -82,7 +82,7 @@ services:
   kafka:
     networks:
       - kratos-net
-    image: docker.io/bitnami/kafka:3.3
+    image: bitnami/kafka:3.3
     ports:
       - "9092:9092"
     volumes:
