@@ -1,23 +1,27 @@
-FROM golang:1.18 AS builder
+
+FROM golang:1.18-alpine3.16 AS builder
+RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
 ARG APP_RELATIVE_PATH
 
 COPY . /src
 WORKDIR /src/app/${APP_RELATIVE_PATH}
 
+RUN apk add make
 RUN GOPROXY=https://goproxy.cn make build
-# RUN go env -w GOPROXY=https://goproxy.cn,direct
-RUN go env
-RUN make build
-FROM debian:stable-slim
+
+FROM alpine:3.16
+RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+MAINTAINER Chris chris@gmail.com
+
+# alpine
+# 设置时区为上海
+RUN apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && apk del tzdata
+
 
 ARG APP_RELATIVE_PATH
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		ca-certificates  \
-        netbase \
-        && rm -rf /var/lib/apt/lists/ \
-        && apt-get autoremove -y && apt-get autoclean -y
 
 COPY --from=builder /src/app/${APP_RELATIVE_PATH}/bin /app
 

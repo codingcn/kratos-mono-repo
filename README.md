@@ -18,7 +18,12 @@
 ### Docker compose快速启动项目
 
 ```
+// 拉取仓库
+git clone git@github.com:codingcn/kratos-mono-repo.git
+
+
 // 构建微服务镜像
+cd kratos-mono-repo
 make docker
 
 // 先编排环境依赖，如mysql、redis、consul...
@@ -36,6 +41,8 @@ docker compose -f deploy/docker-compose/service/docker-compose.yml up
 
 ```
 curl 'http://127.0.0.1:8000/v1/user/info?id=1'
+
+// 返回如下数据，表示服务已成功启动
 {"code":"0","message":"","data":{"id":"1","username":"用户微服务"}}
 ```
 
@@ -77,4 +84,4 @@ docker compose down
 make service name=yourServiceName
 ```
 
-执行完上面make脚本命令之后，需要我们自行
+执行完上面make脚本命令之后，需要我们自行调整编写相应代码

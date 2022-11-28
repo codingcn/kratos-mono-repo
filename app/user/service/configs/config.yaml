@@ -1,5 +1,5 @@
 server:
-  name: "kratos.user.configs"
+  name: "kratos.user.service"
   version: "1.0"
   http:
     addr: 0.0.0.0:8001

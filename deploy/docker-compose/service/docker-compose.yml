@@ -15,7 +15,7 @@ services:
       - app_kratos-net
   kratos-user-service:
     image: go-kratos/kratos-user-service:0.1.0
-    hostname: kratos-user-configs
+    hostname: kratos-user-service
     volumes:
       - ./configs/user.yaml:/data/conf.yaml
     restart: always
@@ -23,7 +23,7 @@ services:
       - app_kratos-net
   kratos-order-service:
     image: go-kratos/kratos-order-service:0.1.0
-    hostname: kratos-order-configs
+    hostname: kratos-order-service
     volumes:
       - ./configs/order.yaml:/data/conf.yaml
     restart: always

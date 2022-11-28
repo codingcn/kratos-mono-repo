@@ -116,7 +116,7 @@ func NewRedisCmd(conf *conf.Data, logger log.Logger) redis.Cmdable {
 func NewUserServiceClient(r registry.Discovery, tp *tracesdk.TracerProvider) userv1.UserClient {
 	conn, err := grpc.DialInsecure(
 		context.Background(),
-		grpc.WithEndpoint("discovery:///kratos.user.configs"),
+		grpc.WithEndpoint("discovery:///kratos.user.service"),
 		grpc.WithDiscovery(r),
 		grpc.WithMiddleware(
 			tracing.Client(tracing.WithTracerProvider(tp)),

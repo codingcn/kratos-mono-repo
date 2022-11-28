@@ -21,7 +21,7 @@ func NewLogger(isProd bool, logLevel zapcore.Level, logFileName string) *zap.Log
 	}
 	if isProd {
 		core := zapcore.NewCore(
-			zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
+			zapcore.NewJSONEncoder(zapcore.EncoderConfig{
 				TimeKey:        "ts",
 				LevelKey:       "level",
 				NameKey:        "Logger",
@@ -29,7 +29,7 @@ func NewLogger(isProd bool, logLevel zapcore.Level, logFileName string) *zap.Log
 				MessageKey:     "msg",
 				StacktraceKey:  "stacktrace",
 				LineEnding:     zapcore.DefaultLineEnding,
-				EncodeLevel:    zapcore.LowercaseColorLevelEncoder,
+				EncodeLevel:    zapcore.LowercaseLevelEncoder,
 				EncodeTime:     timeEncoder,
 				EncodeDuration: zapcore.SecondsDurationEncoder,
 				EncodeCaller:   zapcore.FullCallerEncoder,
@@ -46,7 +46,7 @@ func NewLogger(isProd bool, logLevel zapcore.Level, logFileName string) *zap.Log
 		return zap.New(core, caller, development, zap.AddStacktrace(zap.ErrorLevel), zap.AddCallerSkip(3))
 	}
 	core := zapcore.NewCore(
-		zapcore.NewJSONEncoder(zapcore.EncoderConfig{
+		zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
 			TimeKey:        "ts",
 			LevelKey:       "level",
 			NameKey:        "Logger",

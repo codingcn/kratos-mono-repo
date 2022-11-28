@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func tcpGather(ip string, ports []string) map[string]string {
+func TcpGather(ip string, ports []string) map[string]string {
 	// 检查 emqx 1883, 8083, 8080, 18083 端口
 
 	results := make(map[string]string)

@@ -1,5 +1,5 @@
 server:
-  name: "kratos.order.configs"
+  name: "kratos.order.service"
   version: "1.0"
   http:
     addr: 0.0.0.0:8002

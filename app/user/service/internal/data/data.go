@@ -79,7 +79,7 @@ func NewRegistrar(conf *conf.Registry) registry.Registrar {
 }
 
 func NewGormClient(conf *conf.Data, logger log.Logger) *gorm.DB {
-	log := log.NewHelper(log.With(logger, "module", "server-server/data/ent"))
+	log := log.NewHelper(log.With(logger, "module", "server-server/data/gorm"))
 
 	client, err := gorm.Open(mysql.Open(conf.Database.Source), &gorm.Config{
 		ConnPool: nil,
@@ -97,7 +97,7 @@ func NewGormClient(conf *conf.Data, logger log.Logger) *gorm.DB {
 }
 
 func NewRedisCmd(conf *conf.Data, logger log.Logger) redis.Cmdable {
-	log := log.NewHelper(log.With(logger, "module", "server-server/data/ent"))
+	log := log.NewHelper(log.With(logger, "module", "server-server/data/redis"))
 	client := redis.NewClient(&redis.Options{
 		Addr:         conf.Redis.Addr,
 		ReadTimeout:  conf.Redis.ReadTimeout.AsDuration(),
@@ -117,7 +117,7 @@ func NewRedisCmd(conf *conf.Data, logger log.Logger) redis.Cmdable {
 func NewOrderServiceClient(r registry.Discovery, tp *tracesdk.TracerProvider) orderv1.OrderClient {
 	conn, err := grpc.DialInsecure(
 		context.Background(),
-		grpc.WithEndpoint("discovery:///kratos.order.configs"),
+		grpc.WithEndpoint("discovery:///kratos.order.service"),
 		grpc.WithDiscovery(r),
 		grpc.WithMiddleware(
 			tracing.Client(tracing.WithTracerProvider(tp)),

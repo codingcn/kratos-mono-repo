@@ -3,10 +3,9 @@ package service
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
+	pb "kratos-mono-repo/api/bff/interface/v1"
 	v1 "kratos-mono-repo/api/bff/interface/v1"
 	"kratos-mono-repo/app/bff/interface/internal/biz"
-
-	pb "kratos-mono-repo/api/bff/interface/v1"
 )
 
 type UserService struct {
@@ -23,7 +22,6 @@ func NewUserService(uc *biz.UserUsecase, logger log.Logger) *UserService {
 }
 
 func (s *UserService) GetUserInfo(ctx context.Context, req *pb.GetUserInfoReq) (*pb.GetUserInfoReply, error) {
-	s.log.WithContext(ctx).Infof("GetUserInfo api")
 	resp, err := s.uc.GetUserInfo(ctx, req.Id)
 	if err != nil {
 		return nil, err
