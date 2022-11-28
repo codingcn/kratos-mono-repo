@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.11.2
-// source: api/user/configs/v1/user.proto
+// source: v1/user.proto
 
 package v1
 
@@ -18,7 +18,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserClient is the client API for User configs.
+// UserClient is the client API for User service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
@@ -35,14 +35,14 @@ func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 
 func (c *userClient) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoReply, error) {
 	out := new(GetUserInfoReply)
-	err := c.cc.Invoke(ctx, "/user.configs.v1.User/GetUserInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.service.v1.User/GetUserInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserServer is the server API for User configs.
+// UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
@@ -59,7 +59,7 @@ func (UnimplementedUserServer) GetUserInfo(context.Context, *GetUserInfoReq) (*G
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
-// UnsafeUserServer may be embedded to opt out of forward compatibility for this configs.
+// UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to UserServer will
 // result in compilation errors.
 type UnsafeUserServer interface {
@@ -80,7 +80,7 @@ func _User_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.configs.v1.User/GetUserInfo",
+		FullMethod: "/user.service.v1.User/GetUserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).GetUserInfo(ctx, req.(*GetUserInfoReq))
@@ -88,11 +88,11 @@ func _User_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-// User_ServiceDesc is the grpc.ServiceDesc for User configs.
+// User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var User_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.configs.v1.User",
+	ServiceName: "user.service.v1.User",
 	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +101,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/user/configs/v1/user.proto",
+	Metadata: "v1/user.proto",
 }

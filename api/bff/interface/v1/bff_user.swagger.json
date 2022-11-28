@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1/user.proto",
+    "title": "v1/bff_user.proto",
     "version": "version not set"
   },
   "tags": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sms/send/code": {
-      "post": {
-        "operationId": "UserInterface_SendSmsCode",
+    "/v1/user/info": {
+      "get": {
+        "operationId": "UserInterface_GetUserInfo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1SendSmsCodeReply"
+              "$ref": "#/definitions/v1GetUserInfoReply"
             }
           },
           "default": {
@@ -35,12 +35,11 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1LoginReq"
-            }
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -82,6 +81,18 @@
     }
   },
   "definitions": {
+    "GetUserInfoReplyGetUserInfoReplyData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -109,6 +120,21 @@
         }
       }
     },
+    "v1GetUserInfoReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/GetUserInfoReplyGetUserInfoReplyData"
+        }
+      }
+    },
     "v1LoginReply": {
       "type": "object",
       "properties": {
@@ -119,8 +145,7 @@
         "token": {
           "type": "string"
         }
-      },
-      "title": "The response message containing the greetings"
+      }
     },
     "v1LoginReq": {
       "type": "object",
@@ -130,15 +155,6 @@
         },
         "code": {
           "type": "string"
-        }
-      }
-    },
-    "v1SendSmsCodeReply": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string",
-          "format": "int64"
         }
       }
     }

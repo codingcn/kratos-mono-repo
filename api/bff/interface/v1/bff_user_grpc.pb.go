@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.11.2
-// source: api/bff/interface/v1/user.proto
+// source: v1/bff_user.proto
 
 package v1
 
@@ -18,7 +18,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserInterfaceClient is the client API for UserInterface configs.
+// UserInterfaceClient is the client API for UserInterface service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserInterfaceClient interface {
@@ -52,7 +52,7 @@ func (c *userInterfaceClient) Login(ctx context.Context, in *LoginReq, opts ...g
 	return out, nil
 }
 
-// UserInterfaceServer is the server API for UserInterface configs.
+// UserInterfaceServer is the server API for UserInterface service.
 // All implementations must embed UnimplementedUserInterfaceServer
 // for forward compatibility
 type UserInterfaceServer interface {
@@ -73,7 +73,7 @@ func (UnimplementedUserInterfaceServer) Login(context.Context, *LoginReq) (*Logi
 }
 func (UnimplementedUserInterfaceServer) mustEmbedUnimplementedUserInterfaceServer() {}
 
-// UnsafeUserInterfaceServer may be embedded to opt out of forward compatibility for this configs.
+// UnsafeUserInterfaceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to UserInterfaceServer will
 // result in compilation errors.
 type UnsafeUserInterfaceServer interface {
@@ -120,7 +120,7 @@ func _UserInterface_Login_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-// UserInterface_ServiceDesc is the grpc.ServiceDesc for UserInterface configs.
+// UserInterface_ServiceDesc is the grpc.ServiceDesc for UserInterface service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UserInterface_ServiceDesc = grpc.ServiceDesc{
@@ -137,5 +137,5 @@ var UserInterface_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/bff/interface/v1/user.proto",
+	Metadata: "v1/bff_user.proto",
 }

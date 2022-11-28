@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1/order.proto",
+    "title": "v1/user.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "Order"
+      "name": "User"
     }
   ],
   "consumes": [
@@ -44,8 +44,17 @@
         }
       }
     },
-    "v1HelloReply": {
-      "type": "object"
+    "v1GetUserInfoReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
     }
   }
 }

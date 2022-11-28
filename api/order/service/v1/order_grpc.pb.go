@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.11.2
-// source: api/order/configs/v1/order.proto
+// source: v1/order.proto
 
 package v1
 
@@ -18,7 +18,7 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// OrderClient is the client API for Order configs.
+// OrderClient is the client API for Order service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderClient interface {
@@ -35,14 +35,14 @@ func NewOrderClient(cc grpc.ClientConnInterface) OrderClient {
 
 func (c *orderClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
 	out := new(HelloReply)
-	err := c.cc.Invoke(ctx, "/api.order.configs.v1.Order/Hello", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.order.service.v1.Order/Hello", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// OrderServer is the server API for Order configs.
+// OrderServer is the server API for Order service.
 // All implementations must embed UnimplementedOrderServer
 // for forward compatibility
 type OrderServer interface {
@@ -59,7 +59,7 @@ func (UnimplementedOrderServer) Hello(context.Context, *HelloRequest) (*HelloRep
 }
 func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}
 
-// UnsafeOrderServer may be embedded to opt out of forward compatibility for this configs.
+// UnsafeOrderServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to OrderServer will
 // result in compilation errors.
 type UnsafeOrderServer interface {
@@ -80,7 +80,7 @@ func _Order_Hello_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.order.configs.v1.Order/Hello",
+		FullMethod: "/api.order.service.v1.Order/Hello",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderServer).Hello(ctx, req.(*HelloRequest))
@@ -88,11 +88,11 @@ func _Order_Hello_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
-// Order_ServiceDesc is the grpc.ServiceDesc for Order configs.
+// Order_ServiceDesc is the grpc.ServiceDesc for Order service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Order_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.order.configs.v1.Order",
+	ServiceName: "api.order.service.v1.Order",
 	HandlerType: (*OrderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +101,5 @@ var Order_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/order/configs/v1/order.proto",
+	Metadata: "v1/order.proto",
 }

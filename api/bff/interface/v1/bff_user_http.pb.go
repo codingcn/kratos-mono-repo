@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.5.3
 // - protoc             v3.11.2
-// source: api/bff/interface/v1/user.proto
+// source: v1/bff_user.proto
 
 package v1
 
