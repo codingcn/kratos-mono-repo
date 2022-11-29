@@ -35,5 +35,6 @@ bin/
 # Develop tools
 .vscode/
 .idea/
+tmp/
 *.swp
 deploy/docker-compose/app/data/*
