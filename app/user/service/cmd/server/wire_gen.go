@@ -28,7 +28,7 @@ func wireApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Da
 	db := data.NewGormClient(confData, logger)
 	cmdable := data.NewRedisCmd(confData, logger)
 	discovery := data.NewDiscovery(registry)
-	orderClient := data.NewOrderServiceClient(discovery, tracerProvider)
+	orderClient := data.NewOrderServiceClient(discovery)
 	dataData, cleanup, err := data.NewData(confData, db, cmdable, orderClient, logger)
 	if err != nil {
 		return nil, nil, err

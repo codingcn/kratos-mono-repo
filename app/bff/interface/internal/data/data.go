@@ -10,7 +10,6 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/google/wire"
 	consulAPI "github.com/hashicorp/consul/api"
-	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	"golang.org/x/net/context"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -113,13 +112,13 @@ func NewRedisCmd(conf *conf.Data, logger log.Logger) redis.Cmdable {
 	}
 	return client
 }
-func NewUserServiceClient(r registry.Discovery, tp *tracesdk.TracerProvider) userv1.UserClient {
+func NewUserServiceClient(r registry.Discovery) userv1.UserClient {
 	conn, err := grpc.DialInsecure(
 		context.Background(),
 		grpc.WithEndpoint("discovery:///kratos.user.service"),
 		grpc.WithDiscovery(r),
 		grpc.WithMiddleware(
-			tracing.Client(tracing.WithTracerProvider(tp)),
+			tracing.Client(),
 			recovery.Recovery(),
 		),
 	)

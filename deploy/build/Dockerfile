@@ -12,7 +12,6 @@ RUN GOPROXY=https://goproxy.cn make build
 
 FROM alpine:3.16
 RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-MAINTAINER Chris chris@gmail.com
 
 # alpine
 # 设置时区为上海

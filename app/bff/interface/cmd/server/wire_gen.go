@@ -31,7 +31,7 @@ func wireApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Da
 	}
 	cmdable := data.NewRedisCmd(confData, logger)
 	discovery := data.NewDiscovery(registry)
-	userClient := data.NewUserServiceClient(discovery, tracerProvider)
+	userClient := data.NewUserServiceClient(discovery)
 	dataData, cleanup2, err := data.NewData(confData, db, cmdable, userClient, logger)
 	if err != nil {
 		cleanup()
