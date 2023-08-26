@@ -49,7 +49,7 @@ docker compose -f deploy/docker-compose/service/docker-compose.yml up
 curl 'http://127.0.0.1:8000/v1/user/info?id=1'
 
 // 返回如下数据，表示服务已成功启动
-{"code":"0","message":"","data":{"id":"1","username":"用户微服务"}}
+{"code":401,"message":"JWT token is missing","data":{}}
 ```
 
 浏览器访问Consul ui面板

@@ -4,11 +4,11 @@ RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk
 
 ARG APP_RELATIVE_PATH
 
-COPY . /src
+COPY . /src/app/${APP_RELATIVE_PATH}
 WORKDIR /src/app/${APP_RELATIVE_PATH}
 
 RUN apk add make
-RUN GOPROXY=https://goproxy.cn make build
+RUN export GOPROXY=https://goproxy.cn && make build
 
 FROM alpine:3.16
 RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
